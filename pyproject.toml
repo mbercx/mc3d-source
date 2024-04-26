@@ -1,0 +1,44 @@
+[build-system]
+requires = ['flit_core >=3.4,<4']
+build-backend = 'flit_core.buildapi'
+
+[project]
+name = 'mc3d-source'
+dynamic = ['version']
+description = 'Package for the MC3D-source pipeline.'
+authors = [{name = 'Marnik Bercx', email = 'mbercx@gmail.com'}]
+readme = 'README.md'
+license = {file = 'LICENSE.txt'}
+classifiers = [
+    'Framework :: AiiDA',
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3.12',
+]
+keywords = ['aiida', 'workflows']
+requires-python = '>=3.8'
+dependencies = [
+    'aiida-core[atomic_tools]~=2.3',
+    'typer[all]~=0.9'
+]
+
+[project.urls]
+Home = 'https://github.com/mbercx/mc3d-source'
+Source = 'https://github.com/mbercx/mc3d-source'
+
+[project.optional-dependencies]
+dev = [
+    'pre-commit~=2.17',
+    'pylint~=2.12.2',
+    'pylint-aiida~=0.1',
+    'toml'
+]
+
+[project.scripts]
+mc3d = 'mc3d_source.cli.main:app'
+
+[tool.flit.module]
+name = 'mc3d_source'
+
+[tool.isort]
+profile = "black"

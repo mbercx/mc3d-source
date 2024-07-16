@@ -1,0 +1,28 @@
+max_concurrent: 200
+max_structure_size: 20
+parent_group: structure/source
+relax_group: workchain/relax/11_20
+pw_code: sirius-pw@lumi
+
+overrides:
+  clean_workdir: True
+  base_relax:
+    pw: &pw
+      parameters:
+         DIRECT_MINIMIZATION:
+           nlcg_maxiter: 500
+      parallelization:
+        npool: 8
+      settings:
+        cmdline:
+          - -sirius_cfg
+          - sirius.json
+      metadata:
+        options: &options
+          account: project_465000416
+          queue_name: small-g
+          resources:
+            num_machines: 2
+          max_wallclock_seconds: 259200
+  base_init_relax:
+    pw: *pw

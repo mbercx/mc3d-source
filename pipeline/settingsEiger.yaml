@@ -1,0 +1,29 @@
+max_concurrent: 500
+max_structure_size: 10
+parent_group: structure/source
+relax_group: workchain/test/relaxbigcells
+pw_code: sirius-pw@eiger
+
+overrides:
+  clean_workdir: False
+  base_relax:
+    pw: &pw
+      parameters:
+         DIRECT_MINIMIZATION:
+           nlcg_maxiter: 500
+      parallelization:
+        npool: 8
+      settings:
+        cmdline:
+          - -sirius_cfg
+          - sirius.json
+      metadata:
+        options: &optionsi
+          prepend_text: "echo '{}' | jq '.control = {verbosity: 1}' > sirius.json"
+          account: mr32
+          queue_name: normal
+          resources:
+            num_machines: 2
+          max_wallclock_seconds: 84000
+  base_init_relax:
+    pw: *pw

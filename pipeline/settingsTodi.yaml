@@ -1,0 +1,31 @@
+max_concurrent: 10
+max_structure_size: 40
+parent_group: structure/source
+relax_group: workchain/relax/todi_21_40
+pw_code: sirius-pw@todi
+
+overrides:
+  clean_workdir: False
+  base_relax:
+    pw: &pw
+      # parameters:
+      #    DIRECT_MINIMIZATION:
+      #      nlcg_maxiter: 500
+      parallelization:
+        npool: 12
+      settings:
+        cmdline:
+          - -sirius_cfg
+          - sirius.json
+      metadata:
+        options:
+          prepend_text: "echo '{}' | jq '.control = {verbosity: 1}' > sirius.json"
+          account: g168
+          queue_name: normal
+          resources:
+            num_cores_per_mpiproc: 20
+            num_mpiprocs_per_machine: 12
+            num_machines: 1
+          max_wallclock_seconds: 42000
+  base_init_relax:
+    pw: *pw

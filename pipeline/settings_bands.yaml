@@ -1,0 +1,28 @@
+max_concurrent: 20
+parent_group: structures/bands-test
+bands_group: workchain/test/bands-low-nbands
+pw_code: sirius-pw@todi
+
+overrides:
+  clean_workdir: False
+  nbands_factor: 1.5
+  scf:
+    pw: &pw
+      parallelization:
+        npool: 12
+      settings:
+        cmdline:
+          - -sirius_cfg
+          - sirius.json
+      metadata:
+        options: &options
+          prepend_text: "echo '{}' | jq '.control = {verbosity: 1}' > sirius.json"
+          account: g168
+          queue_name: normal
+          resources:
+            num_cores_per_mpiproc: 20
+            num_mpiprocs_per_machine: 12
+            num_machines: 1
+          max_wallclock_seconds: 42000
+  bands:
+    pw: *pw

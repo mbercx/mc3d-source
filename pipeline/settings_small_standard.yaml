@@ -1,0 +1,29 @@
+max_concurrent: 400
+max_structure_size: 5
+parent_group: structure/source
+relax_group: workchain/test/relax
+pw_code: sirius-pw@lumi
+
+overrides:
+  clean_workdir: False
+  base_relax:
+    pw: &pw
+      parameters:
+         DIRECT_MINIMIZATION:
+           nlcg_maxiter: 500
+      parallelization:
+        npool: 8
+      settings:
+        cmdline:
+          - -sirius_cfg
+          - sirius.json
+      metadata:
+        options: &options
+          prepend_text: 'unset SIRIUS_SKIP_WFC_EXTRAPOLATION'
+          account: project_465000416
+          queue_name: standard-g
+          resources:
+            num_machines: 1
+          max_wallclock_seconds: 84000
+  base_init_relax:
+    pw: *pw

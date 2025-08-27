@@ -1,22 +1,26 @@
 [build-system]
-requires = ['flit_core >=3.4,<4']
-build-backend = 'flit_core.buildapi'
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
-name = 'mc3d-source'
-dynamic = ['version']
-description = 'Package for the MC3D-source pipeline.'
+name = "mc3d-source"
+dynamic = ["version"]
+description = "Package for the MC3D-source pipeline."
 authors = [{name = 'Marnik Bercx', email = 'mbercx@gmail.com'}]
-readme = 'README.md'
-license = {file = 'LICENSE.txt'}
-classifiers = [
-    'Framework :: AiiDA',
-    'License :: OSI Approved :: MIT License',
-    'Programming Language :: Python',
-    'Programming Language :: Python :: 3.12',
-]
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
 keywords = ['aiida', 'workflows']
-requires-python = '>=3.8'
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+
 dependencies = [
     'aiida-core[atomic_tools]~=2.3',
     'typer[all]~=0.9'
@@ -26,19 +30,22 @@ dependencies = [
 Home = 'https://github.com/mbercx/mc3d-source'
 Source = 'https://github.com/mbercx/mc3d-source'
 
-[project.optional-dependencies]
-dev = [
-    'pre-commit~=2.17',
-    'pylint~=2.12.2',
-    'pylint-aiida~=0.1',
-    'toml'
-]
-
 [project.scripts]
 mc3d = 'mc3d_source.cli.main:app'
 
-[tool.flit.module]
-name = 'mc3d_source'
+[tool.hatch.version]
+path = "src/mc3d_source/__about__.py"
 
-[tool.isort]
-profile = "black"
+
+[tool.hatch.envs.docs]
+dependencies = [
+  "mystmd"
+]
+scripts.build = "cd docs && myst build"
+scripts.start = "cd docs && myst start"
+
+
+[tool.hatch.envs.precommit]
+dependencies = ["pre-commit"]
+scripts.install = "pre-commit install"
+scripts.run = "pre-commit run {args:--all-files}"

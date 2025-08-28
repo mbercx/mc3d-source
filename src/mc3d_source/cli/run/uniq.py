@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 """Utitilies for the uniqueness analysis."""
+
 import click
 import spglib
 from aiida.tools.data.structure import structure_to_spglib_tuple
@@ -26,9 +26,7 @@ def first_come_first_serve(ordered, matcher):
         advance = 100 / len(ordered)
 
         for key, data in ordered.items():
-            progress.update(
-                task, description=f"Find uniques: {key:<16}", advance=advance
-            )
+            progress.update(task, description=f"Find uniques: {key:<16}", advance=advance)
 
             uniq_dict = {}
 
@@ -37,9 +35,7 @@ def first_come_first_serve(ordered, matcher):
 
                 # Look for similarity, stop in case you've found it
                 for uniq_data in uniq_dict.values():
-                    if matcher.fit(
-                        structure.get_pymatgen(), uniq_data[0].get_pymatgen()
-                    ):
+                    if matcher.fit(structure.get_pymatgen(), uniq_data[0].get_pymatgen()):
                         new_unique = False
                         uniq_data[1].append(uuid)
                         break
@@ -68,15 +64,11 @@ def seb_knows_best(ordered, matcher):
 
             for i in range(nstructures):
                 for j in range(i + 1, nstructures):
-                    adjacent_matrix[i, j] = matcher.fit(
-                        structures[i].get_pymatgen(), structures[j].get_pymatgen()
-                    )
+                    adjacent_matrix[i, j] = matcher.fit(structures[i].get_pymatgen(), structures[j].get_pymatgen())
                     adjacent_matrix[j, i] = adjacent_matrix[i, j]
 
             _, connection = connected_components(adjacent_matrix, directed=False)
-            prototype_indices = [
-                where(connection == e)[0].tolist() for e in set(connection)
-            ]
+            prototype_indices = [where(connection == e)[0].tolist() for e in set(connection)]
 
             for prototype in prototype_indices:
                 prototype_uuids = [uuids[index] for index in prototype]

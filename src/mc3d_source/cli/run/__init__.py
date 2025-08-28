@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 """Run commands to obtain the final list of structures."""
+
 import collections
 from importlib import resources
 from pathlib import Path
@@ -111,59 +111,45 @@ def uniq(
 
     if contains:
         for element in contains:
-            struc_filters["and"].append(
-                {"extras.chemical_system": {"like": f"%-{element}-%"}}
-            )
+            struc_filters["and"].append({"extras.chemical_system": {"like": f"%-{element}-%"}})
 
     if skip:
         for element in skip:
-            struc_filters["and"].append(
-                {"extras.chemical_system": {"!like": f"%-{element}-%"}}
-            )
+            struc_filters["and"].append({"extras.chemical_system": {"!like": f"%-{element}-%"}})
 
     if max_size is not None:
         struc_filters["and"].append({"extras.number_of_sites": {"<=": max_size}})
 
     query_dict = {"source": orm.QueryBuilder(), "target": orm.QueryBuilder()}
 
-    query_dict["source"].append(
-        orm.Group, filters={"label": source_group.label}, tag="group"
-    )
+    query_dict["source"].append(orm.Group, filters={"label": source_group.label}, tag="group")
 
     if isinstance(source_group.nodes[0], orm.StructureData):
-        query_dict["source"].append(
-            orm.StructureData, with_group="group", filters=struc_filters
-        )
+        query_dict["source"].append(orm.StructureData, with_group="group", filters=struc_filters)
     elif isinstance(source_group.nodes[0], orm.WorkChainNode):
-        query_dict["source"].append(
-            orm.WorkChainNode, with_group="group", tag="wc"
-        ).append(orm.StructureData, with_incoming="wc", filters=struc_filters)
+        query_dict["source"].append(orm.WorkChainNode, with_group="group", tag="wc").append(
+            orm.StructureData, with_incoming="wc", filters=struc_filters
+        )
 
-    query_dict["target"].append(
-        orm.Group, filters={"label": target_group.label}, tag="group"
-    ).append(orm.StructureData, with_group="group", filters=struc_filters)
+    query_dict["target"].append(orm.Group, filters={"label": target_group.label}, tag="group").append(
+        orm.StructureData, with_group="group", filters=struc_filters
+    )
 
     number_source = query_dict["source"].count()
     number_target = query_dict["target"].count()
 
     if number_source == 0:
-        print(
-            "[bold red]Error:[/] There are no structures in the source group with the specified filters."
-        )
+        print("[bold red]Error:[/] There are no structures in the source group with the specified filters.")
         return
     else:
-        print(
-            f"[bold blue]Info:[/] Found {number_source} structures in the source group."
-        )
+        print(f"[bold blue]Info:[/] Found {number_source} structures in the source group.")
 
     if limit:
         print(f"[bold blue]Info:[/] Limiting the source query to {limit} structures.")
         query_dict["source"].limit(limit)
 
     if number_target != 0:
-        print(
-            f"[bold blue]Info:[/] Found {number_target} structures in the target group."
-        )
+        print(f"[bold blue]Info:[/] Found {number_target} structures in the target group.")
 
     # Map all structures that are in the candidate group on reduced chemical formula and (optionally) space group
     mapping = collections.defaultdict(list)
@@ -179,17 +165,13 @@ def uniq(
 
                 if sort_by_spg:
                     sort_key += "|"
-                    sort_key += str(
-                        get_spglib_spacegroup_symbol(structure, symprec=0.005)
-                    )
+                    sort_key += str(get_spglib_spacegroup_symbol(structure, symprec=0.005))
 
                 if group == "target" and sort_key not in mapping.keys():
                     # If the `target` key is not in the list of `source` keys, it doesn't need to be considered
                     continue
 
-                mapping[sort_key].append(
-                    [len(structure.sites), structure.uuid, structure]
-                )
+                mapping[sort_key].append([len(structure.sites), structure.uuid, structure])
 
             except Exception as exc:
                 failures.append((structure.uuid, exc))
@@ -201,10 +183,7 @@ def uniq(
     # Order the mapping alphabetically by chemical formula and within each formula entry by number of atoms and UUID
     ordered = collections.OrderedDict()
     for sort_key, entries in sorted(mapping.items(), key=lambda x: x[0]):
-        ordered[sort_key] = [
-            (entry[1], entry[2])
-            for entry in sorted(entries, key=lambda e: (e[0], e[1]))
-        ]
+        ordered[sort_key] = [(entry[1], entry[2]) for entry in sorted(entries, key=lambda e: (e[0], e[1]))]
 
     # Write out the sorted mapping
     # sort_number_dict = {key: len(listy) for key, listy in ordered.items()}
@@ -244,9 +223,7 @@ def uniq(
 
     # Add the duplicates to the target group nodes
     if target_group.nodes:
-        for structure in track(
-            target_group.nodes, description="Looking for new unique nodes: "
-        ):
+        for structure in track(target_group.nodes, description="Looking for new unique nodes: "):
             for uniq_uuid, data in uniq.items():
                 _, duplicate_uuids = data
 
@@ -256,15 +233,11 @@ def uniq(
                     if not dry_run:
                         target_duplicates = set(structure.extras["duplicates"])
                         for duplicate_uuid in duplicate_uuids:
-                            target_duplicates.update(
-                                get_duplicate_set(duplicate_uuid, duplicate_style)
-                            )
+                            target_duplicates.update(get_duplicate_set(duplicate_uuid, duplicate_style))
                         target_duplicates_list.append((structure, target_duplicates))
 
     if not dry_run and target_group.nodes:
-        for structure, duplicates in track(
-            target_duplicates_list, description="Updating target duplicates:   "
-        ):
+        for structure, duplicates in track(target_duplicates_list, description="Updating target duplicates:   "):
             duplicates.remove(get_duplicate_id(structure))
             structure.base.extras.set("duplicates", duplicates)
 
@@ -278,27 +251,21 @@ def uniq(
     if not dry_run and len(new_uuid_uniq) > 0:
         # Add the new golden structures + duplicates to the target group
         with get_manager().get_profile_storage().transaction() as _:
-            for data in track(
-                new_uuid_uniq.values(), description="Adding extras to new nodes:   "
-            ):
+            for data in track(new_uuid_uniq.values(), description="Adding extras to new nodes:   "):
                 structure, duplicates = data
                 try:
                     target_duplicates = set(structure.extras.get("duplicates", []))
                 except TypeError:
                     raise ValueError(structure.extras.get("duplicates", []))
                 if duplicate_style == "source":
-                    duplicates = [
-                        get_duplicate_id(orm.load_node(uuid)) for uuid in duplicates
-                    ]
+                    duplicates = [get_duplicate_id(orm.load_node(uuid)) for uuid in duplicates]
                 target_duplicates.update(set(duplicates))
                 target_duplicates.remove(get_duplicate_id(structure))
                 structure.base.extras.set("duplicates", target_duplicates)
                 new_nodes.append(structure)
 
     print(f"[bold blue]Info:[/] Adding {len(new_nodes)} nodes to target group.")
-    target_group.backend_entity.add_nodes(
-        [node.backend_entity for node in new_nodes], skip_orm=True
-    )
+    target_group.backend_entity.add_nodes([node.backend_entity for node in new_nodes], skip_orm=True)
     print("[bold green]Success:[/] Uniqueness Analysis complete! 🌈")
 
     # Add the "golden UUID" to the structures left behind
@@ -323,9 +290,7 @@ def select(unique_group):
 
     flag_dict = {}
 
-    print(
-        "[bold blue]Info[/]: Populating flag dictionary from the CSV files of each database."
-    )
+    print("[bold blue]Info[/]: Populating flag dictionary from the CSV files of each database.")
     for database in ("cod", "icsd", "mpds"):
         flag_dict.setdefault(database, {})
         df = pd.read_csv(resources.files(flags) / f"{database}.csv", header=2)
@@ -343,9 +308,7 @@ def select(unique_group):
             if better_duplicates:
                 replacements.append((structure, better_duplicates))
 
-    print(
-        f"[bold blue]Info[/]:Found {len(replacements)} structures to replace with better duplicates."
-    )
+    print(f"[bold blue]Info[/]:Found {len(replacements)} structures to replace with better duplicates.")
     typer.confirm("Do you want to continue?", abort=True)
 
     group = orm.load_group(unique_group)

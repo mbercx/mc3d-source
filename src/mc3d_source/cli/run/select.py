@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 """Utilities for the structure selection."""
+
 # pylint: disable=redefined-builtin, unsubscriptable-object
 from __future__ import annotations
 
@@ -38,9 +38,7 @@ def find_better_duplicates(flag_dict, structure):
             struc_df["is_high_temperature"],
         )
     ):
-        better_duplicates = get_ok_duplicates(
-            structure, ["is_theoretical", "is_high_pressure", "is_high_temperature"]
-        )
+        better_duplicates = get_ok_duplicates(structure, ["is_theoretical", "is_high_pressure", "is_high_temperature"])
         if better_duplicates:
             return better_duplicates
 

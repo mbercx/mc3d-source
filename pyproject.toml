@@ -36,14 +36,13 @@ mc3d = 'mc3d_source.cli.main:app'
 [tool.hatch.version]
 path = "src/mc3d_source/__about__.py"
 
-
 [tool.hatch.envs.docs]
 dependencies = [
-  "mystmd"
+  "mkdocs",
+  "mkdocs-material"
 ]
-scripts.build = "cd docs && myst build"
-scripts.start = "cd docs && myst start"
-
+scripts.build = "mkdocs build --clean --strict"
+scripts.serve = "mkdocs serve --dev-addr localhost:8000"
 
 [tool.hatch.envs.precommit]
 dependencies = ["pre-commit"]

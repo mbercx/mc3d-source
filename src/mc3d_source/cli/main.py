@@ -1,11 +1,21 @@
-# -*- coding: utf-8 -*-
-"""Top-level of the aiida_sdb CLI."""
+"""Top level of the `mc3d-source` CLI."""
+
 import typer
 
-from . import run
+from mc3d_source.cli.commands.curate import main as curate_main
+class OrderedGroup(typer.main.TyperGroup):
+    def list_commands(self, _):
+        return [
+            "curate",
+        ]
 
-app = typer.Typer(pretty_exceptions_show_locals=False)
-app.add_typer(run.app, name="run")
+
+app = typer.Typer(
+    pretty_exceptions_show_locals=False,
+    rich_markup_mode="rich",
+    cls=OrderedGroup
+)
+app.command("curate")(curate_main)
 
 
 @app.callback()

@@ -1,50 +1,52 @@
 """Perform uniqueness analysis on a group of structures."""
 
+from __future__ import annotations
+
 import collections
 import json
-from itertools import islice
-
 import time
-from multiprocessing import Manager, Pool
 from collections import OrderedDict
-
+from itertools import islice
+from multiprocessing import Manager, Pool
 from pathlib import Path
-from typing import Annotated, List, Optional
+from typing import TYPE_CHECKING, Annotated
+
 import spglib
+import yaml
+from aiida import load_profile, orm
+from aiida.cmdline.utils import decorators
+from aiida.common import NotExistent
 from aiida.tools.data.structure import structure_to_spglib_tuple
 from numpy import eye, where
 from pymatgen.analysis.structure_matcher import StructureMatcher
-from rich.progress import BarColumn, Progress, TextColumn, TimeElapsedColumn
+from rich import print
+from rich.progress import BarColumn, Progress, TextColumn, TimeElapsedColumn, track
 from scipy.sparse.csgraph import connected_components
 
-import typer
-import yaml
-from aiida import orm, load_profile
-from aiida.cmdline.utils import decorators
-from aiida.common import NotExistent
-from rich import print
-from rich.progress import track
+if TYPE_CHECKING:
+    import typer
 
 
 @decorators.with_dbenv()
 def main(
-    source_group: List[str],
+    source_group: list[str],
+    *,
     profile: str | None = None,
     output_file: Annotated[
-        Optional[Path],
+        Path | None,
         typer.Option(
             "-o",
             "--output-file",
             help="Write the list of duplicate families to this file.",
         ),
-    ] = 'result.json',
+    ] = "result.json",
     method: str = "first",
     sort_by_spg: bool = True,
-    matcher_settings: Path = None,
+    matcher_settings: Path | None = None,
     parallelize: int = 5,
     chunk_size: int | None = None,
     contains: Annotated[
-        Optional[List[str]],
+        list[str] | None,
         typer.Option(
             "--contains",
             "-c",
@@ -52,7 +54,7 @@ def main(
         ),
     ] = None,
     skip: Annotated[
-        Optional[List[str]],
+        list[str] | None,
         typer.Option(
             "-S",
             "--skip",
@@ -90,41 +92,35 @@ def main(
             print(f"[bold red]Error:[/] The source group `{group_label}` does not exist!")
             return
 
-    struc_filters = {"and": [
-        {"extras": {"!has_key": "incorrect_formula"}},
-    ]}
+    struc_filters = {
+        "and": [
+            {"extras": {"!has_key": "incorrect_formula"}},
+        ]
+    }
 
     if contains:
         for element in contains:
-            struc_filters["and"].append(
-                {"extras.chemical_system": {"like": f"%-{element}-%"}}
-            )
+            struc_filters["and"].append({"extras.chemical_system": {"like": f"%-{element}-%"}})
 
     if skip:
         for element in skip:
-            struc_filters["and"].append(
-                {"extras.chemical_system": {"!like": f"%-{element}-%"}}
-            )
+            struc_filters["and"].append({"extras.chemical_system": {"!like": f"%-{element}-%"}})
 
     query = orm.QueryBuilder()
-    query.append(
-        orm.Group, filters={"label": {'in': source_group}}, tag="group"
-    ).append(
-        orm.StructureData, with_group="group", filters=struc_filters,
-        project=('*', 'extras.source', 'extras.cif_spacegroup_number')
+    query.append(orm.Group, filters={"label": {"in": source_group}}, tag="group").append(
+        orm.StructureData,
+        with_group="group",
+        filters=struc_filters,
+        project=("*", "extras.source", "extras.cif_spacegroup_number"),
     )
 
     number_source = query.count()
 
     if number_source == 0:
-        print(
-            "[bold red]Error:[/] There are no structures in the source group(s) with the specified filters."
-        )
+        print("[bold red]Error:[/] There are no structures in the source group(s) with the specified filters.")
         return
-    else:
-        print(
-            f"[bold blue]Info:[/] Found {number_source} structures in the source group(s)."
-        )
+
+    print(f"[bold blue]Info:[/] Found {number_source} structures in the source group(s).")
 
     # Map all structures that are in the candidate group on reduced chemical formula and (optionally) space group
     mapping = collections.defaultdict(list)
@@ -137,38 +133,42 @@ def main(
         sort_key = structure.get_formula(mode="hill_compact")
 
         if sort_by_spg:
-            spg_number = cif_spacegroup_number or spglib.get_symmetry_dataset(
-                structure_to_spglib_tuple(structure)[0],
-                symprec=0.005,
-            ).number
+            spg_number = (
+                cif_spacegroup_number
+                or spglib.get_symmetry_dataset(
+                    structure_to_spglib_tuple(structure)[0],
+                    symprec=0.005,
+                ).number
+            )
             sort_key += f"|{spg_number}"
 
-        source_string = (
-            f"{source.get('database')}|"
-            f"{source.get('version')}|"
-            f"{source.get('id')}"
-        )
-        mapping[sort_key].append(
-            (source_string, structure.get_pymatgen_structure())
-        )
+        source_string = f"{source.get('database')}|" f"{source.get('version')}|" f"{source.get('id')}"
+        mapping[sort_key].append((source_string, structure.get_pymatgen_structure()))
 
     print(f"[bold blue]Info:[/] Sorted the structures into {len(mapping)} groups.")
 
     # Perform the uniqueness analysis for each formula/SPG key
-    checkpoint_file = Path('checkpoint.json')
+    checkpoint_file = Path("checkpoint.json")
 
     if checkpoint_file.exists():
-        with checkpoint_file.open('r') as handle:
+        with checkpoint_file.open("r") as handle:
             uniques_mapping = json.load(handle)
         print(f"[bold blue]Info:[/] Loaded previous data from {checkpoint_file}.")
     else:
         # For formula/SPG that only have one structure, no analysis needs to be performed
-        uniques_mapping = {k: [v[0][0],] for k, v in mapping.items() if len(v) == 1}
+        uniques_mapping = {
+            k: [
+                v[0][0],
+            ]
+            for k, v in mapping.items()
+            if len(v) == 1
+        }
 
     mapping = OrderedDict(
         sorted(
             ((k, v) for k, v in mapping.items() if k not in uniques_mapping),
-            key=lambda item: len(item[1]), reverse=True
+            key=lambda item: len(item[1]),
+            reverse=True,
         )
     )
     if chunk_size is not None:
@@ -176,19 +176,19 @@ def main(
             uniques_mapping.update(
                 similarity_parallel(chunk, structure_matcher_settings, method=method, parallelize=parallelize)
             )
-            with checkpoint_file.open('w') as handle:
+            with checkpoint_file.open("w") as handle:
                 handle.write(json.dumps(uniques_mapping))
                 print(f"[bold blue]Info:[/] Backed up data to {checkpoint_file}.")
     else:
-        uniques_mapping.update(similarity_parallel(
-            mapping, structure_matcher_settings, method=method, parallelize=parallelize
-        ))
+        uniques_mapping.update(
+            similarity_parallel(mapping, structure_matcher_settings, method=method, parallelize=parallelize)
+        )
 
     unique_families = [x for v in uniques_mapping.values() for x in v]
 
     print(f"[bold blue]Info:[/] Found {len(unique_families)} unique families.")
 
-    with output_file.open('w') as handle:
+    with output_file.open("w") as handle:
         handle.write(json.dumps(unique_families, indent=4))
 
 
@@ -215,11 +215,7 @@ def similarity_parallel(mapping, structure_matcher_settings, method, parallelize
 
     manager = Manager()
     queue = manager.Queue()
-    wrapper = {
-        'first': first_wrapper,
-        'seb': seb_wrapper,
-        'pymatgen': pymatgen_wrapper
-    }[method]
+    wrapper = {"first": first_wrapper, "seb": seb_wrapper, "pymatgen": pymatgen_wrapper}[method]
 
     total_steps = sum(len(v) for v in mapping.values())
 
@@ -240,9 +236,7 @@ def similarity_parallel(mapping, structure_matcher_settings, method, parallelize
                 while not queue.empty():
                     msg = queue.get()
                     progress.advance(overall, 1)
-                    progress.update(
-                        overall, description=f"[bold green]Processing {msg:<15}"
-                    )
+                    progress.update(overall, description=f"[bold green]Processing {msg:<15}")
 
                 time.sleep(0.1)
 
@@ -261,13 +255,10 @@ def seb_wrapper(args):
     return seb_knows_best(*args)
 
 
-
-
-
 def first_reference(formula, data, structure_matcher_settings, queue):
     """Similarity analysis that takes the first structure as the reference structure to match with.
 
-    :param str formula: 
+    :param str formula:
     :param dict structure_matcher_settings: Settings to configure the `StructureMatcher`.
     :param str method: Method to use for similarity analysis.
     :param int parallelize: Number of parallel processes to use.
@@ -285,7 +276,6 @@ def first_reference(formula, data, structure_matcher_settings, queue):
 
         # Look for similarity, stop in case you've found it
         for uniq_data in uniq_list:
-
             reference_structure, sources = uniq_data
 
             if matcher.fit(structure, reference_structure):
@@ -294,9 +284,7 @@ def first_reference(formula, data, structure_matcher_settings, queue):
                 break
 
         if new_unique:
-            uniq_list.append(
-                (structure, [source_string])
-            )
+            uniq_list.append((structure, [source_string]))
 
     return {formula: [el[1] for el in uniq_list]}
 
@@ -315,15 +303,11 @@ def seb_knows_best(formula, data, structure_matcher_settings, queue):
 
     for i in range(nstructures):
         for j in range(i + 1, nstructures):
-            adjacent_matrix[i, j] = matcher.fit(
-                structures[i], structures[j]
-            )
+            adjacent_matrix[i, j] = matcher.fit(structures[i], structures[j])
             adjacent_matrix[j, i] = adjacent_matrix[i, j]
 
     _, connection = connected_components(adjacent_matrix, directed=False)
-    prototype_indices = [
-        where(connection == e)[0].tolist() for e in set(connection)
-    ]
+    prototype_indices = [where(connection == e)[0].tolist() for e in set(connection)]
 
     uniq_list = []
 
@@ -331,9 +315,7 @@ def seb_knows_best(formula, data, structure_matcher_settings, queue):
         prototype_sources = [source_strings[index] for index in prototype]
         prototype_structure = structures[prototype[0]]
 
-        uniq_list.append(
-            (prototype_structure, prototype_sources)
-        )
+        uniq_list.append((prototype_structure, prototype_sources))
 
     queue.put(formula)
 

@@ -9,9 +9,10 @@ from collections import OrderedDict
 from itertools import islice
 from multiprocessing import Manager, Pool
 from pathlib import Path
-from typing import TYPE_CHECKING, Annotated
+from typing import Annotated
 
 import spglib
+import typer  # noqa: TCH002
 import yaml
 from aiida import load_profile, orm
 from aiida.cmdline.utils import decorators
@@ -22,9 +23,6 @@ from pymatgen.analysis.structure_matcher import StructureMatcher
 from rich import print
 from rich.progress import BarColumn, Progress, TextColumn, TimeElapsedColumn, track
 from scipy.sparse.csgraph import connected_components
-
-if TYPE_CHECKING:
-    import typer
 
 
 @decorators.with_dbenv()

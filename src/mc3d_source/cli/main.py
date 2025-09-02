@@ -3,22 +3,19 @@
 import typer
 
 from mc3d_source.cli.commands.curate import main as curate_main
+from mc3d_source.cli.commands.uniq import main as uniq_main
 from mc3d_source.cli.commands.update import main as update_main
+
+
 class OrderedGroup(typer.main.TyperGroup):
     def list_commands(self, _):
-        return [
-            "curate",
-            "update",
-        ]
+        return ["curate", "update", "uniq"]
 
 
-app = typer.Typer(
-    pretty_exceptions_show_locals=False,
-    rich_markup_mode="rich",
-    cls=OrderedGroup
-)
+app = typer.Typer(pretty_exceptions_show_locals=False, rich_markup_mode="rich", cls=OrderedGroup)
 app.command("curate")(curate_main)
 app.command("update")(update_main)
+app.command("uniq")(uniq_main)
 
 
 @app.callback()

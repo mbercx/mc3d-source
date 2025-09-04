@@ -6,6 +6,7 @@ theme:
 nav:
   - index.md
   - usage.md
+  - topics.md
   - developer.md
 
 markdown_extensions:

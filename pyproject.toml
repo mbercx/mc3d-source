@@ -31,7 +31,7 @@ Home = 'https://github.com/mbercx/mc3d-source'
 Source = 'https://github.com/mbercx/mc3d-source'
 
 [project.scripts]
-mc3d = 'mc3d_source.cli.main:app'
+mc3d-source = 'mc3d_source.cli.main:app'
 
 [tool.hatch.version]
 path = "src/mc3d_source/__about__.py"

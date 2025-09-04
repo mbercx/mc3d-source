@@ -52,3 +52,25 @@ This deals with the following cases:
 
 One case that is missed is when the `CifCleanWorkChain` failed for the new import, but succeeded for the old one.
 If this happens, we want to still keep the old version, unless it was since removed by the MPDS.
+
+## Deprecation
+
+Here we discuss the process of "deprecating" sources and MC3D IDs.
+This means that they are no longer valid for some reason, and need to be flagged/removed from the frontend, and no longer considered when building the unique families of duplicates.
+
+### Sources
+
+Reasons to deprecate a source include:
+
+* `id_removed`: The corresponding ID has been removed from the source database.
+* `structure_updated`: The corresponding ID has a different structure in a newer version of the database
+* `incorrect_formula`: The structure of the corresponding ID had a formula mismatch between the cleaned CIF and the parsed structure.
+
+### MC3D-IDs
+
+When all of the sources in the corresponding family are deprecated, an MC3D ID is considered "fully" deprecated.
+
+!!! note
+
+    This means when a structure we ran (aka golden structure) might be deprecated, but the MC3D ID is not.
+    We instead put a warning, but keep the structure findable.

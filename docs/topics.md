@@ -2,6 +2,19 @@
 
 This is a collection of notes that discuss the approach to various steps of the MC3D-source pipeline.
 
+## Curate
+
+Starting from each `CifCleanWorkChain`, add several details to the extras of the parsed
+`StructureData`:
+
+1. Add the source from the raw CIF to all `StructureData` under `source`.
+2. Add the spacegroup number of the cleaned CIF to all `StructureData` under `cif_spacegroup_number`.
+3. Check if the structure has partial occupancies and add that boolean under `partial_occupancies`.
+4. Check if the `CifCleanWorkChain` had an exit code corresponding to a formula mismatch and add the corresponding
+    extra to `incorrect_formula`.
+
+Finally, stoichiometric structures without formula mismatch issues are considered "curated", i.e. can be considered for the uniqueness analysis.
+
 ## Update
 
 This section discusses our approach for "updating" an import, i.e. you do a fresh import from a source database that you already imported structures from previously.

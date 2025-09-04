@@ -1,7 +1,12 @@
 site_name: mc3d-source
+
 theme:
   name: material
+
 nav:
   - index.md
   - usage.md
   - developer.md
+
+markdown_extensions:
+  - admonition

@@ -21,7 +21,7 @@ DB_NAME_MAPPING = {
 }
 # This maps the `CifCleanWorkChain` exit code to the value of the `incorrect_formula` extra which we assign to the
 # parsed `StructureData`.
-CIFCLEAN_EXIT_CODE_TO_EXTRAS_VALUE = {430: "missing_elements", 431: "different_comp", 432: "check_failes"}
+CIFCLEAN_EXIT_CODE_TO_EXTRAS_VALUE = {430: "missing_elements", 431: "different_comp", 432: "check_failed"}
 
 
 def main(

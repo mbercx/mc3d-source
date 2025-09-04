@@ -23,7 +23,7 @@ classifiers = [
 
 dependencies = [
     'aiida-core[atomic_tools]~=2.3',
-    'typer[all]~=0.9'
+    'typer~=0.17.3'
 ]
 
 [project.urls]

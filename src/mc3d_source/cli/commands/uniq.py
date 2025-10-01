@@ -22,7 +22,6 @@ from numpy import eye, where
 from pymatgen.analysis.structure_matcher import StructureMatcher
 from rich import print
 from rich.progress import BarColumn, Progress, TextColumn, TimeElapsedColumn, track
-from scipy.sparse.csgraph import connected_components
 
 
 @decorators.with_dbenv()
@@ -289,6 +288,11 @@ def first_reference(formula, data, structure_matcher_settings, queue):
 
 def seb_knows_best(formula, data, structure_matcher_settings, queue):
     """Perform a similarity analysis using the Seb-knows-best method."""
+    try:
+        from scipy.sparse.csgraph import connected_components
+    except ImportError as exc:
+        raise ImportError("This feature requires the `scipy` package. Please install it manually.") from exc
+
     queue.put(formula)
 
     matcher = StructureMatcher(**structure_matcher_settings)

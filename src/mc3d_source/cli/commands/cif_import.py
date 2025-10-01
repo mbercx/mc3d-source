@@ -58,7 +58,7 @@ def main(
 
         importer_parameters["api_key"] = api_key
 
-        if max_number_species > 5:  # noqa: PLR2004
+        if max_number_species > 5:
             # Anything above `quinary` will be translated to `multinary`
             max_number_species = 6
 

@@ -4,7 +4,7 @@ The `mc3d-source` package comes with a CLI that takes care of most steps require
 After installing, run:
 
 ```
-mc3d-source --help
+mc3d --help
 ```
 
 To get an overview of the commands.

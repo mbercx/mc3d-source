@@ -3,7 +3,7 @@
 ## Hatch
 
 We use [Hatch](https://hatch.pypa.io/latest) to set up environments and scripts for most developer tasks.
-To see a table of the available environmens and their scripts, run:
+To see a table of the available environments and their scripts, run:
 
     hatch env show
 
@@ -29,4 +29,4 @@ You can install the [pre-commit](https://pre-commit.com/) hooks with:
 
 Or run them via:
 
-    hatch run precommit:install
+    hatch run precommit:run

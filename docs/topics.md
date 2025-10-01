@@ -29,7 +29,7 @@ First steps are to:
 
 1. Do a full import of all the raw `CifData`.
 1. Run the `CifCleanWorkChain` for all of them.
-3. "Curate" the structures with `mc3d-source curate`.
+3. "Curate" the structures with `mc3d curate`.
 
 This will result in a group of "curated" structures, let's call it `mpds/v2/structure/curated`.
 

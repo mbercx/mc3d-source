@@ -9,7 +9,7 @@ import typer
 from aiida import orm
 from rich import print as rprint
 
-from mc3d_source.contants import SourceDeprecation
+from mc3d_source.constants import SourceDeprecation
 from mc3d_source.tools.source import get_source_string
 
 if TYPE_CHECKING:
@@ -80,7 +80,6 @@ def structure_updated(
     rprint(f"[bold yellow]Report:[/] Found {len(old_source_were_fine)} structures where the old source was fine.")
 
     new_sources_taken = new_sources.difference(old_source_were_fine)
-    len(new_sources_taken)
 
     versions = set()
     updated_sources = set()

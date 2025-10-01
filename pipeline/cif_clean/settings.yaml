@@ -1,0 +1,8 @@
+unique_extra_keys:
+  - _aiida_hash
+max_concurrent: 100
+parent_group_label: mpds/v2/cif/raw
+group_label: mpds/v2/workchain/clean
+cif_filter_code: cif-filter@localhost
+cif_select_code: cif-select@localhost
+clean_structure_group: mpds/v2/structure/parsed

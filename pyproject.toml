@@ -20,7 +20,6 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
 ]
-
 dependencies = [
     'aiida-core[atomic_tools]~=2.3',
     'aiida-codtools~=3.0',
@@ -37,26 +36,48 @@ Source = 'https://github.com/mbercx/mc3d-source'
 [project.scripts]
 mc3d-source = 'mc3d_source.cli.main:app'
 
+[project.optional-dependencies]
+docs = [
+"mkdocs",
+  "mkdocs-material"
+]
+tests = [
+  "pytest"
+]
+pre-commit = [
+  "pre-commit"
+]
+
+[dependency-groups]
+dev = [
+  "mc3d-source[docs,tests,pre-commit]",
+]
+
 [tool.hatch.version]
 path = "src/mc3d_source/__about__.py"
 
+[tool.hatch.envs.default]
+installer = 'uv'
+
 [tool.hatch.envs.docs]
-dependencies = [
-  "mkdocs",
-  "mkdocs-material"
-]
+features = ["docs"]
 scripts.build = "mkdocs build --clean --strict"
 scripts.serve = "mkdocs serve --dev-addr localhost:8000"
 scripts.deploy = "mkdocs gh-deploy --force"
 
-[tool.hatch.envs.precommit]
-dependencies = ["pre-commit"]
+[tool.hatch.envs.pre-commit]
+features = ["pre-commit"]
 scripts.install = "pre-commit install"
-scripts.run = "pre-commit run {args:--all-files}"
+scripts.run = "pre-commit run {args}"
 
-[tool.hatch.envs.tests]
-dependencies = ["pytest"]
-scripts.run = "pytest {args}"
+[tool.hatch.envs.hatch-test]
+features = ["tests"]
+randomize = false
+parallel = false
+run = "pytest {args}"
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
 [tool.ruff]
 lint.ignore = [

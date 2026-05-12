@@ -1,15 +1,19 @@
 """Update the latest structure set for a database."""
 
 from aiida import load_profile, orm
+from aiida.cmdline.utils import decorators
 from pymatgen.analysis.structure_matcher import StructureMatcher
 from rich import print
 from rich.progress import track
 
-load_profile("prod")
 
-
-def main(old_group: str, new_group: str, target_group: str):
+@decorators.with_dbenv()
+def main(
+    old_group: str, new_group: str, target_group: str, *, profile: str | None = None
+):
     """Update the latest structure set for a database."""
+    if profile:
+        load_profile(profile, allow_switch=True)
 
     target_source_ids = set(
         orm.QueryBuilder()
@@ -18,7 +22,9 @@ def main(old_group: str, new_group: str, target_group: str):
         .all(flat=True)
     )
     if len(target_source_ids) > 1:
-        print(f"[bold yellow]Report:[/] Found {len(target_source_ids)} `StructureData` in target group.")
+        print(
+            f"[bold yellow]Report:[/] Found {len(target_source_ids)} `StructureData` in target group."
+        )
         print("[bold blue]Info:[/] These will be skipped in the update process.")
 
     target_group = orm.load_group(target_group)
@@ -54,7 +60,10 @@ def main(old_group: str, new_group: str, target_group: str):
             n_new_structures += 1
         else:
             old_structure = old_id_to_nodes[source_id]
-            similar = matcher.fit(old_structure.get_pymatgen_structure(), new_structure.get_pymatgen_structure())
+            similar = matcher.fit(
+                old_structure.get_pymatgen_structure(),
+                new_structure.get_pymatgen_structure(),
+            )
             if similar:
                 selected_structure = old_structure
                 n_old_structures += 1

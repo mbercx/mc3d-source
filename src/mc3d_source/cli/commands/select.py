@@ -3,21 +3,17 @@
 from __future__ import annotations
 
 import json
-from typing import TYPE_CHECKING
+from pathlib import Path
 
 from aiida import load_profile, orm
+from aiida.cmdline.utils import decorators
 from pymatgen.core import Composition
 from rich import print as rprint
 
 from mc3d_source.tools.source import get_source_string, get_source_structure_dict
 
-if TYPE_CHECKING:
-    from pathlib import Path
 
-
-load_profile("prod")
-
-
+@decorators.with_dbenv()
 def main(
     unique_families_path: Path,
     mc3d_id_file: Path,
@@ -25,7 +21,12 @@ def main(
     selected_path: Path | None = "selected-families.json",
     new_mc3d_data: Path | None = "new-mc3d-data.json",
     new_uniques_group: str | None = "global/uniques/new",
+    *,
+    profile: str | None = None,
 ):
+    if profile:
+        load_profile(profile, allow_switch=True)
+
     with mc3d_id_file.open("r") as handle:
         mc3d_id_data = json.load(handle)
 
@@ -77,7 +78,9 @@ def main(
 
         # Find all the new family IDs that correspond to the corresponding sources in the previous family
         previous_family_ids = {
-            source_to_new_family_index[source] for source in previous_family if source in source_to_new_family_index
+            source_to_new_family_index[source]
+            for source in previous_family
+            if source in source_to_new_family_index
         }
         if previous_family_ids:
             mc3d_id_to_family_ids[mc3d_id] = list(previous_family_ids)
@@ -90,8 +93,12 @@ def main(
 
         other_deprecated_ids[mc3d_id] = source_string
 
-    rprint(f"Number of MC3D IDs corresponding to a new family: {len(mc3d_id_to_family_ids)}")
-    rprint(f"Number of MC3D IDs whose previous family is entirely deprecated: {len(mc3d_id_family_deprecated)}")
+    rprint(
+        f"Number of MC3D IDs corresponding to a new family: {len(mc3d_id_to_family_ids)}"
+    )
+    rprint(
+        f"Number of MC3D IDs whose previous family is entirely deprecated: {len(mc3d_id_family_deprecated)}"
+    )
 
     rprint(f"Other MC3D IDs that no longer have a family: {len(other_deprecated_ids)}")
 
@@ -167,13 +174,22 @@ def main(
             structure = source_to_structure[golden_source]
             data["golden_structure"].update(
                 {
-                    "reduced_formula": Composition(structure.get_formula()).reduced_formula,
-                    "spglib_space_group": structure.base.extras.get("spacegroup_number"),
+                    "reduced_formula": Composition(
+                        structure.get_formula()
+                    ).reduced_formula,
+                    "spglib_space_group": structure.base.extras.get(
+                        "spacegroup_number"
+                    ),
                     "uuid": structure.uuid,
                 }
             )
             structure.base.extras.set(
-                "duplicates", [source for source in data["duplicate_family"] if source != golden_source]
+                "duplicates",
+                [
+                    source
+                    for source in data["duplicate_family"]
+                    if source != golden_source
+                ],
             )
             unique_structures.append(structure)
 

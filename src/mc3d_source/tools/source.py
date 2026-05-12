@@ -19,7 +19,11 @@ def get_source_uuid_mapping():
     """Get a cached mapping from source strings to the corresponding `StructureData` UUID."""
     query = orm.QueryBuilder()
 
-    query.append(orm.StructureData, filters={"extras": {"has_key": "source"}}, project=("extras.source", "uuid"))
+    query.append(
+        orm.StructureData,
+        filters={"extras": {"has_key": "source"}},
+        project=("extras.source", "uuid"),
+    )
     return {get_source_string(source): uuid for source, uuid in query.all()}
 
 
@@ -90,7 +94,11 @@ def get_source_structure_dict(source_list):
     uuids = [source_to_uuid[source] for source in source_list]
 
     query = orm.QueryBuilder()
-    query.append(orm.StructureData, filters={"uuid": {"in": uuids}}, project=("extras.source", "*"))
+    query.append(
+        orm.StructureData,
+        filters={"uuid": {"in": uuids}},
+        project=("extras.source", "*"),
+    )
     total = query.count()
     source_structure_dict = {}
 
@@ -125,7 +133,9 @@ def find_cif_clean(source_string):
     raise ValueError(msg)
 
 
-def sources_match(ref_source_string, target_source_string, matcher=None, tol_factor=None):
+def sources_match(
+    ref_source_string, target_source_string, matcher=None, tol_factor=None
+):
     """Check if the structures of two sources match with the `StructureMatcher`."""
 
     tol_factor = tol_factor or 1
@@ -144,5 +154,8 @@ def sources_match(ref_source_string, target_source_string, matcher=None, tol_fac
     target_structure = find_source_structure(target_source_string)
 
     return matcher.fit(
-        ref_structure.get_pymatgen_structure(), target_structure.get_pymatgen_structure()
-    ) and get_spacegroup_number(ref_structure) == get_spacegroup_number(target_structure)
+        ref_structure.get_pymatgen_structure(),
+        target_structure.get_pymatgen_structure(),
+    ) and get_spacegroup_number(ref_structure) == get_spacegroup_number(
+        target_structure
+    )

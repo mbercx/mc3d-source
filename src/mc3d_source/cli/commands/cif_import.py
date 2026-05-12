@@ -6,17 +6,18 @@ from datetime import datetime
 from urllib.error import HTTPError
 
 from aiida import load_profile, orm
+from aiida.cmdline.utils import decorators
 from aiida.plugins.factories import DbImporterFactory
 from CifFile.StarFile import StarError
 from rich import print as rprint
 
-load_profile("prod")
 
-
+@decorators.with_dbenv()
 def main(
     database: str,
     cif_raw_group: str,
     *,
+    profile: str | None = None,
     max_number_species: int | None = None,
     api_key: str | None = None,
     dry_run: bool = False,
@@ -31,9 +32,13 @@ def main(
     rerunning this script, any new CIF files that have been added to the external database since the last import will be
     simply added to the group.
     """
+    if profile:
+        load_profile(profile, allow_switch=True)
 
     def time_report(message):
-        rprint(f"[bold yellow]Report ({datetime.now().astimezone().strftime('%Y-%m-%d %H:%M')}):[/] {message}")
+        rprint(
+            f"[bold yellow]Report ({datetime.now().astimezone().strftime('%Y-%m-%d %H:%M')}):[/] {message}"
+        )
 
     max_number_species = max_number_species or 20
     group_cif_raw, created = orm.Group.collection.get_or_create(label=cif_raw_group)
@@ -84,7 +89,9 @@ def main(
                 5: "quinary",
             }
             if number_species in number_species_to_class:
-                query_parameters["query"]["classes"] = number_species_to_class[number_species]
+                query_parameters["query"]["classes"] = number_species_to_class[
+                    number_species
+                ]
             else:
                 # Limitation of MPDS: retrieve everything with more than 5 elements and filter on retrieved cifs. Since it
                 # is impossible to quickly determine the number of elements in a raw CIF file without parsing it, we cannot
@@ -117,19 +124,28 @@ def main(
             source_id = entry.source["id"]
 
             if source_id in existing_source_ids:
-                time_report(f"Cif<{source_id}> skipping: already present in group {group_cif_raw.label}")
+                time_report(
+                    f"Cif<{source_id}> skipping: already present in group {group_cif_raw.label}"
+                )
                 continue
 
             try:
                 cif = entry.get_cif_node()
-            except (AttributeError, UnicodeDecodeError, StarError, HTTPError) as exception:
+            except (
+                AttributeError,
+                UnicodeDecodeError,
+                StarError,
+                HTTPError,
+            ) as exception:
                 name = exception.__class__.__name__
                 time_report(
                     f"Cif<{source_id}> skipping: encountered an error retrieving cif data: {name} | {exception}"
                 )
             else:
                 batch.append(cif)
-                time_report(f"Cif<{source_id}> adding new CifData<{cif.uuid}> to batch.")
+                time_report(
+                    f"Cif<{source_id}> adding new CifData<{cif.uuid}> to batch."
+                )
 
             if len(batch) == batch_size:
                 time_report(f"Storing batch of {len(batch)} CifData nodes")

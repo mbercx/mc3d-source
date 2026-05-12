@@ -86,7 +86,9 @@ def main(
         try:
             orm.load_group(group_label)
         except NotExistent:
-            print(f"[bold red]Error:[/] The source group `{group_label}` does not exist!")
+            print(
+                f"[bold red]Error:[/] The source group `{group_label}` does not exist!"
+            )
             return
 
     struc_filters = {
@@ -97,14 +99,20 @@ def main(
 
     if contains:
         for element in contains:
-            struc_filters["and"].append({"extras.chemical_system": {"like": f"%-{element}-%"}})
+            struc_filters["and"].append(
+                {"extras.chemical_system": {"like": f"%-{element}-%"}}
+            )
 
     if skip:
         for element in skip:
-            struc_filters["and"].append({"extras.chemical_system": {"!like": f"%-{element}-%"}})
+            struc_filters["and"].append(
+                {"extras.chemical_system": {"!like": f"%-{element}-%"}}
+            )
 
     query = orm.QueryBuilder()
-    query.append(orm.Group, filters={"label": {"in": source_group}}, tag="group").append(
+    query.append(
+        orm.Group, filters={"label": {"in": source_group}}, tag="group"
+    ).append(
         orm.StructureData,
         with_group="group",
         filters=struc_filters,
@@ -114,10 +122,14 @@ def main(
     number_source = query.count()
 
     if number_source == 0:
-        print("[bold red]Error:[/] There are no structures in the source group(s) with the specified filters.")
+        print(
+            "[bold red]Error:[/] There are no structures in the source group(s) with the specified filters."
+        )
         return
 
-    print(f"[bold blue]Info:[/] Found {number_source} structures in the source group(s).")
+    print(
+        f"[bold blue]Info:[/] Found {number_source} structures in the source group(s)."
+    )
 
     # Map all structures that are in the candidate group on reduced chemical formula and (optionally) space group
     mapping = collections.defaultdict(list)
@@ -139,7 +151,9 @@ def main(
             )
             sort_key += f"|{spg_number}"
 
-        source_string = f"{source.get('database')}|" f"{source.get('version')}|" f"{source.get('id')}"
+        source_string = (
+            f"{source.get('database')}|{source.get('version')}|{source.get('id')}"
+        )
         mapping[sort_key].append((source_string, structure.get_pymatgen_structure()))
 
     print(f"[bold blue]Info:[/] Sorted the structures into {len(mapping)} groups.")
@@ -171,14 +185,24 @@ def main(
     if chunk_size is not None:
         for chunk in chunked_mapping(mapping, chunk_size):
             uniques_mapping.update(
-                similarity_parallel(chunk, structure_matcher_settings, method=method, parallelize=parallelize)
+                similarity_parallel(
+                    chunk,
+                    structure_matcher_settings,
+                    method=method,
+                    parallelize=parallelize,
+                )
             )
             with checkpoint_file.open("w") as handle:
                 handle.write(json.dumps(uniques_mapping))
                 print(f"[bold blue]Info:[/] Backed up data to {checkpoint_file}.")
     else:
         uniques_mapping.update(
-            similarity_parallel(mapping, structure_matcher_settings, method=method, parallelize=parallelize)
+            similarity_parallel(
+                mapping,
+                structure_matcher_settings,
+                method=method,
+                parallelize=parallelize,
+            )
         )
 
     unique_families = [x for v in uniques_mapping.values() for x in v]
@@ -212,7 +236,11 @@ def similarity_parallel(mapping, structure_matcher_settings, method, parallelize
 
     manager = Manager()
     queue = manager.Queue()
-    wrapper = {"first": first_wrapper, "seb": seb_wrapper, "pymatgen": pymatgen_wrapper}[method]
+    wrapper = {
+        "first": first_wrapper,
+        "seb": seb_wrapper,
+        "pymatgen": pymatgen_wrapper,
+    }[method]
 
     total_steps = sum(len(v) for v in mapping.values())
 
@@ -226,14 +254,19 @@ def similarity_parallel(mapping, structure_matcher_settings, method, parallelize
         with Pool(processes=parallelize) as pool:
             result_async = pool.map_async(
                 wrapper,
-                [(formula, structures, structure_matcher_settings, queue) for formula, structures in mapping.items()],
+                [
+                    (formula, structures, structure_matcher_settings, queue)
+                    for formula, structures in mapping.items()
+                ],
             )
 
             while not result_async.ready():
                 while not queue.empty():
                     msg = queue.get()
                     progress.advance(overall, 1)
-                    progress.update(overall, description=f"[bold green]Processing {msg:<15}")
+                    progress.update(
+                        overall, description=f"[bold green]Processing {msg:<15}"
+                    )
 
                 time.sleep(0.1)
 
@@ -291,7 +324,9 @@ def seb_knows_best(formula, data, structure_matcher_settings, queue):
     try:
         from scipy.sparse.csgraph import connected_components
     except ImportError as exc:
-        raise ImportError("This feature requires the `scipy` package. Please install it manually.") from exc
+        raise ImportError(
+            "This feature requires the `scipy` package. Please install it manually."
+        ) from exc
 
     queue.put(formula)
 
@@ -332,9 +367,15 @@ def pymatgen_wrapper(args):
         queue.put(formula)
         matcher = StructureMatcher(**structure_matcher_settings)
 
-        id_to_source = {id(structure): source_string for source_string, structure in data}
+        id_to_source = {
+            id(structure): source_string for source_string, structure in data
+        }
         groups = matcher.group_structures([structure for _, structure in data])
 
-        return {formula: [[id_to_source[id(structure)] for structure in group] for group in groups]}
+        return {
+            formula: [
+                [id_to_source[id(structure)] for structure in group] for group in groups
+            ]
+        }
 
     return pymatgen_group(*args)

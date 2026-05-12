@@ -2,7 +2,11 @@
 
 import typer
 
-from mc3d_source.cli.commands.analyse.deprecation import id_removed, incorrect_formula, structure_updated
+from mc3d_source.cli.commands.analyse.deprecation import (
+    id_removed,
+    incorrect_formula,
+    structure_updated,
+)
 from mc3d_source.cli.commands.cif_import import main as import_main
 from mc3d_source.cli.commands.curate import main as curate_main
 from mc3d_source.cli.commands.select import main as select_main
@@ -15,7 +19,9 @@ class OrderedGroup(typer.main.TyperGroup):
         return ["import", "curate", "update", "uniq", "select", "analyse"]
 
 
-app = typer.Typer(pretty_exceptions_show_locals=False, rich_markup_mode="rich", cls=OrderedGroup)
+app = typer.Typer(
+    pretty_exceptions_show_locals=False, rich_markup_mode="rich", cls=OrderedGroup
+)
 app.command("import")(import_main)
 app.command("curate")(curate_main)
 app.command("update")(update_main)

@@ -1,11 +1,10 @@
 """Curate the parsed `StructureData` from a set of `CifCleanWorkChain`."""
 
 from aiida import load_profile, orm
+from aiida.cmdline.utils import decorators
 from aiida_codtools.workflows.cif_clean import CifCleanWorkChain
 from rich import print
 from rich.progress import track
-
-load_profile("prod")
 
 
 KEY_SOURCE = "source"
@@ -21,12 +20,19 @@ DB_NAME_MAPPING = {
 }
 # This maps the `CifCleanWorkChain` exit code to the value of the `incorrect_formula` extra which we assign to the
 # parsed `StructureData`.
-CIFCLEAN_EXIT_CODE_TO_EXTRAS_VALUE = {430: "missing_elements", 431: "different_comp", 432: "check_failed"}
+CIFCLEAN_EXIT_CODE_TO_EXTRAS_VALUE = {
+    430: "missing_elements",
+    431: "different_comp",
+    432: "check_failed",
+}
 
 
+@decorators.with_dbenv()
 def main(
     cif_clean_group: str,
     curated_structure_group: str,
+    *,
+    profile: str | None = None,
 ):
     """Curate the parsed `StructureData`.
 
@@ -41,13 +47,23 @@ def main(
 
     Add stoichiometric structures without formula mismatch issues to the `CURATED_STRUCTURE_GROUP`.
     """
+    if profile:
+        load_profile(profile, allow_switch=True)
+
     query = orm.QueryBuilder()
     query.append(orm.Group, filters={"label": cif_clean_group}, tag="group").append(
-        CifCleanWorkChain, with_group="group", tag="cif_clean", project="attributes.exit_status"
-    ).append(orm.CifData, with_outgoing="cif_clean", project=("attributes.source")).append(
+        CifCleanWorkChain,
+        with_group="group",
+        tag="cif_clean",
+        project="attributes.exit_status",
+    ).append(
+        orm.CifData, with_outgoing="cif_clean", project=("attributes.source")
+    ).append(
         orm.CifData, with_incoming="cif_clean", project="attributes.spacegroup_numbers"
     ).append(orm.StructureData, with_incoming="cif_clean", project="*")
-    print(f"[bold yellow]Report:[/] Found {query.count()} `CifCleanWorkChain` to process.")
+    print(
+        f"[bold yellow]Report:[/] Found {query.count()} `CifCleanWorkChain` to process."
+    )
 
     curated_structure_group = orm.load_group(curated_structure_group)
 
@@ -76,7 +92,9 @@ def main(
         # Check that the `CifCleanWorkChain` doesn't indicate that the structure might have an incorrect formula
         incorrect_formula = cif_wc_exit_status in CIFCLEAN_EXIT_CODE_TO_EXTRAS_VALUE
         if incorrect_formula:
-            extras_to_set[KEY_INCORRECT_FORMULA] = CIFCLEAN_EXIT_CODE_TO_EXTRAS_VALUE[cif_wc_exit_status]
+            extras_to_set[KEY_INCORRECT_FORMULA] = CIFCLEAN_EXIT_CODE_TO_EXTRAS_VALUE[
+                cif_wc_exit_status
+            ]
 
         # Select only structures that have no partial occupancies or formula issues.
         curated = not any((partial_occupancies, incorrect_formula))

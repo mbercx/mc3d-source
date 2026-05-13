@@ -1,0 +1,1035 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../usage/">
+      
+      
+        <link rel="next" href="../developer/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Topics - mc3d-source</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#topics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="mc3d-source" class="md-header__button md-logo" aria-label="mc3d-source" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            mc3d-source
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Topics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="mc3d-source" class="md-nav__button md-logo" aria-label="mc3d-source" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    mc3d-source
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Semantics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#group-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group labels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structuredata-extras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        StructureData extras
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="StructureData extras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-by-aiida-codtools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set by aiida-codtools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-by-mc3d-source-curate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set by mc3d-source curate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#created-later-by-uniq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Created later by uniq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added-later-by-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added later by select
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#curate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Curate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uniqueness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniqueness
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Select
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deprecation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deprecation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deprecation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source-level-deprecation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source-level deprecation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mc3d-id-level-deprecation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MC3D-ID-level deprecation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Semantics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#group-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group labels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structuredata-extras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        StructureData extras
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="StructureData extras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-by-aiida-codtools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set by aiida-codtools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-by-mc3d-source-curate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set by mc3d-source curate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#created-later-by-uniq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Created later by uniq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added-later-by-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added later by select
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#curate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Curate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uniqueness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniqueness
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Select
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deprecation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deprecation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deprecation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source-level-deprecation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source-level deprecation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mc3d-id-level-deprecation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MC3D-ID-level deprecation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="topics">Topics</h1>
+<p>Algorithmic notes and conventions used across the <code>mc3d-source</code> pipeline. Each section describes one stage or concept; the order roughly mirrors the order in which the corresponding CLI commands are typically run.</p>
+<h2 id="semantics">Semantics</h2>
+<p>The vocabulary used throughout this documentation:</p>
+<ul>
+<li><strong>Curated structure</strong>: a <code>StructureData</code> produced by a <code>CifCleanWorkChain</code> that passed both checks &mdash; no partial occupancies and no formula mismatch. Curated structures are the input to the uniqueness analysis.</li>
+<li><strong>Duplicate family</strong>: a set of source strings whose curated structures are deemed structurally equivalent by <code>pymatgen</code>'s <code>StructureMatcher</code> (see <a href="#uniqueness">Uniqueness</a>).</li>
+<li><strong>Golden structure</strong>: the one source string chosen to represent a duplicate family in the final MC3D set (see <a href="#select">Select</a>). All other sources in the family are listed in the golden structure's <code>duplicates</code> extra.</li>
+</ul>
+<h2 id="data">Data</h2>
+<p>The pipeline lives in an AiiDA database and is built around a few conventions on top of the AiiDA data types.</p>
+<h3 id="group-labels">Group labels</h3>
+<p>Pipeline state is tracked through AiiDA groups. By convention, labels are slash-separated paths with a (mostly) stable shape:</p>
+<div class="highlight"><pre><span></span><code>&lt;database&gt;[/&lt;version&gt;]/&lt;data_type&gt;/&lt;stage&gt;
+</code></pre></div>
+<p>The <code>&lt;version&gt;</code> segment is only used for databases that have been re-imported (currently only MPDS, with <code>v1</code> and <code>v2</code>). Using MPDS <code>v2</code> as the running example, the labels written across the pipeline are:</p>
+<table>
+  <colgroup>
+    <col style="width: 18em">
+    <col>
+  </colgroup>
+  <thead>
+    <tr><th>Label</th><th>Contents</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>mpds/v2/cif/raw</code></td>
+      <td>Raw <code>CifData</code> nodes fetched from the MPDS. Written by <code>mc3d-source import</code>.</td>
+    </tr>
+    <tr>
+      <td><code>mpds/v2/workchain/clean</code></td>
+      <td>The <code>CifCleanWorkChain</code> runs themselves, one per raw CIF. Written by <code>pipeline/cif_clean/</code>.</td>
+    </tr>
+    <tr>
+      <td><code>mpds/v2/cif/clean</code></td>
+      <td>The cleaned <code>CifData</code> outputs of the <code>CifCleanWorkChain</code>s. Written by <code>pipeline/cif_clean/</code>.</td>
+    </tr>
+    <tr>
+      <td><code>mpds/v2/structure/parsed</code></td>
+      <td>The parsed <code>StructureData</code> outputs of the <code>CifCleanWorkChain</code>s. Input to <a href="#curate"><code>curate</code></a>. Written by <code>pipeline/cif_clean/</code>.</td>
+    </tr>
+    <tr>
+      <td><code>mpds/v2/structure/curated</code></td>
+      <td>Parsed <code>StructureData</code> that survived curation (no partial occupancies, no formula mismatch). All parsed structures also gain extras at this stage; only the clean subset is added to this group. Written by <a href="#curate"><code>mc3d-source curate</code></a>.</td>
+    </tr>
+    <tr>
+      <td><code>mpds/v2/structure/final</code></td>
+      <td>Reconciled structures for <code>v2</code>, with structures from <code>v1</code> carried over where possible. Only produced for re-imported databases. Written by <a href="#update"><code>mc3d-source update</code></a>.</td>
+    </tr>
+    <tr>
+      <td><code>global/uniques/new</code></td>
+      <td>Golden <code>StructureData</code> selected as the new MC3D set. Default name; configurable via <code>--new-uniques-group</code>. Written by <a href="#select"><code>mc3d-source select</code></a>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Group labels are passed explicitly to every CLI command &mdash; the package does not assume any defaults.</p>
+<h3 id="structuredata-extras"><code>StructureData</code> extras</h3>
+<p>After the <code>CifCleanWorkChain</code> runs and <code>curate</code>, every parsed <code>StructureData</code> carries extras from two sources: SeeKpath (via <code>aiida-codtools</code>) sets the structural / formula extras, and <code>mc3d-source curate</code> adds the provenance + curation flags.</p>
+<h4 id="set-by-aiida-codtools">Set by <code>aiida-codtools</code></h4>
+<p>The <code>CifCleanWorkChain</code> calls the <code>primitive_structure_from_cif</code> calcfunction (in <code>aiida_codtools.calculations.functions.primitive_structure_from_cif</code>), which runs SeeKpath and attaches the following extras to the primitive <code>StructureData</code> it returns:</p>
+<table>
+  <colgroup>
+    <col style="width: 18em">
+    <col>
+  </colgroup>
+  <thead>
+    <tr><th>Extra (with type)</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>formula_hill</code><br>(<code>str</code>)</td>
+      <td>Hill-notation chemical formula of the primitive cell.</td>
+    </tr>
+    <tr>
+      <td><code>formula_hill_compact</code><br>(<code>str</code>)</td>
+      <td>Hill-compact formula; used for the sort key by <code>uniq</code> along with the CIF space group number.</td>
+    </tr>
+    <tr>
+      <td><code>chemical_system</code><br>(<code>str</code>)</td>
+      <td>Hyphen-padded sorted set of element symbols, e.g. <code>-Fe-O-</code>. Used by <code>uniq</code>'s <code>--contains</code> / <code>--skip</code> filters and by <code>select</code>'s COD-hydrogen exclusion.</td>
+    </tr>
+    <tr>
+      <td><code>spacegroup_international</code><br>(<code>str</code>)</td>
+      <td>SeeKpath international space-group symbol.</td>
+    </tr>
+    <tr>
+      <td><code>spacegroup_number</code><br>(<code>int</code>)</td>
+      <td>SeeKpath space-group number. Read by <code>select</code> to populate the <code>spglib_space_group</code> field of <code>new-mc3d-data.json</code>. Distinct from <code>cif_spacegroup_number</code> (see below), which comes from the cleaned CIF.</td>
+    </tr>
+    <tr>
+      <td><code>bravais_lattice</code><br>(<code>str</code>)</td>
+      <td>SeeKpath Bravais-lattice short label.</td>
+    </tr>
+    <tr>
+      <td><code>bravais_lattice_extended</code><br>(<code>str</code>)</td>
+      <td>SeeKpath Bravais-lattice extended label.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>These extras are present on every parsed <code>StructureData</code>, regardless of whether <code>curate</code> later admits it to the curated group.</p>
+<h4 id="set-by-mc3d-source-curate">Set by <code>mc3d-source curate</code></h4>
+<table>
+  <colgroup>
+    <col style="width: 18em">
+    <col>
+  </colgroup>
+  <thead>
+    <tr><th>Extra (with type)</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>source</code><br>(<code>dict</code> with keys <code>database</code>, <code>version</code>, <code>id</code>)</td>
+      <td>Provenance of the structure in the upstream database. Copied from the raw <code>CifData</code>, mapping the upstream <code>db_name</code> to a short code: <code>Crystallography Open Database</code> &rarr; <code>cod</code>, <code>Icsd</code> &rarr; <code>icsd</code>, <code>Materials Platform for Data Science</code> &rarr; <code>mpds</code>.</td>
+    </tr>
+    <tr>
+      <td><code>cif_spacegroup_number</code><br>(<code>int</code>)</td>
+      <td>Used first as a sort key in the uniqueness analysis. Taken from the <code>spacegroup_numbers</code> attribute of the cleaned <code>CifData</code> produced by <code>CifCleanWorkChain</code>. Only set when the workflow reports exactly one space group.</td>
+    </tr>
+    <tr>
+      <td><code>partial_occupancies</code><br>(<code>bool</code>)</td>
+      <td>Flags non-stoichiometric structures. Set to <code>structure.is_alloy or structure.has_vacancies</code>.</td>
+    </tr>
+    <tr>
+      <td><code>incorrect_formula</code><br>(<code>str</code>)</td>
+      <td>Flags a formula mismatch between the cleaned CIF and the parsed structure. Set only when the <code>CifCleanWorkChain</code> exit code is one of: <code>430</code> &rarr; <code>missing_elements</code>, <code>431</code> &rarr; <code>different_comp</code>, <code>432</code> &rarr; <code>check_failed</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="created-later-by-uniq">Created later by <code>uniq</code></h4>
+<p>Once a structure leaves the AiiDA database (i.e. is serialised to JSON), it is referred to by a "source string" of the form:</p>
+<div class="highlight"><pre><span></span><code>&lt;database&gt;|&lt;version&gt;|&lt;id&gt;
+</code></pre></div>
+<p>e.g. <code>cod|1521121|176429</code>. This is the canonical key used in all JSON outputs &mdash; the unique families file from <code>uniq</code>, the deprecation reports from <code>analyse</code>, the new MC3D data file from <code>select</code>, and the <code>duplicates</code> extras written back by <code>select</code>.</p>
+<p>The string is constructed by <code>mc3d_source.tools.source.get_source_string</code>, which understands both the raw <code>CifData.source</code> format (<code>db_name</code> + <code>version</code> + <code>id</code>) and the curated extras format (<code>database</code> + <code>version</code> + <code>id</code>).</p>
+<p>Source strings are first emitted by <a href="#uniqueness"><code>uniq</code></a>: it groups curated <code>StructureData</code> into duplicate families and writes a JSON list of source-string lists. Subsequent stages consume that file by source string rather than by AiiDA UUID.</p>
+<h4 id="added-later-by-select">Added later by <code>select</code></h4>
+<p><code>select</code> writes a <code>duplicates</code> extra (<code>list[str]</code>) on each golden structure with the list of source strings that collapsed into it (excluding the golden source itself).</p>
+<h2 id="curate">Curate</h2>
+<p><code>curate</code> takes a <code>CifCleanWorkChain</code> group (e.g. <code>mpds/v2/workchain/clean</code>) and writes results into a curated <code>StructureData</code> group (<code>curated_structure_group</code>, e.g. <code>mpds/v2/structure/curated</code>). See the <a href="#group-labels">group labels table</a> for the full set of groups in play.</p>
+<p>For each <code>CifCleanWorkChain</code> in the input group, <code>curate</code> adds the four extras described above to the parsed <code>StructureData</code>:</p>
+<ol>
+<li><code>source</code> from the raw CIF.</li>
+<li><code>cif_spacegroup_number</code> from the cleaned CIF (only if a single space group is reported).</li>
+<li><code>partial_occupancies</code> based on <code>is_alloy</code> / <code>has_vacancies</code>.</li>
+<li><code>incorrect_formula</code> based on the work chain exit status.</li>
+</ol>
+<p>Stoichiometric structures without formula-mismatch issues are added to the curated group; the rest get the extras but stay out of the curated group. This way nothing is lost, but the curated group is exactly the set fit for uniqueness analysis.</p>
+<h2 id="update">Update</h2>
+<p><code>update</code> handles the case where you re-import a source database and want to fold the new import into the previous curated set without redoing the unique-family analysis from scratch.</p>
+<p>It takes three group labels &mdash; <code>old_group</code>, <code>new_group</code>, and <code>target_group</code>. For the MPDS re-import these would be <code>mpds/v1/structure/curated</code>, <code>mpds/v2/structure/curated</code>, and <code>mpds/v2/structure/final</code> respectively. See the <a href="#group-labels">group labels table</a> for context.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The current logic was written for the MPDS, where every entry's <code>version</code> field is bumped on every import. For databases where only some entries change version (e.g. COD), the logic needs to be revisited.</p>
+</div>
+<p>The procedure has two steps:</p>
+<ol>
+<li><strong>Import and process the new version.</strong> Do a full <code>import</code>, run <code>CifCleanWorkChain</code> for all the new raw CIFs, then <code>curate</code> to obtain e.g. <code>mpds/v2/structure/curated</code>.</li>
+<li><strong>Reconcile against the previous curated set.</strong> For each <code>StructureData</code> in the new curated group:<ul>
+<li>If a structure with the same source ID is already in the target group, skip it (this makes <code>update</code> re-runnable on a partial target).</li>
+<li>Else if no entry with the same source ID exists in the old curated group, take the new structure.</li>
+<li>Else, compare the old and new structures via <code>StructureMatcher</code>: if they match, keep the <strong>old</strong> structure (preserves the older version string and avoids spurious churn); otherwise take the new structure.</li>
+</ul>
+</li>
+</ol>
+<p>The output goes into the target group (the "final" group for the new version, e.g. <code>mpds/v2/structure/final</code>).</p>
+<p>This handles three real cases:</p>
+<ul>
+<li>Entry removed upstream &rarr; absent from <code>latest</code>, will be flagged later by <code>analyse id-removed</code>.</li>
+<li>Entry updated but structurally unchanged &rarr; old source is preserved.</li>
+<li>Entry updated and structurally different &rarr; the version string is bumped.</li>
+</ul>
+<p>One case is <strong>not</strong> handled: when the new <code>CifCleanWorkChain</code> fails but the old one succeeded, we currently drop the entry even if the old version is still valid upstream. If this becomes important, the logic needs to consult the previous curated set as a fallback.</p>
+<h2 id="uniqueness">Uniqueness</h2>
+<p><code>uniq</code> collapses curated structures into duplicate families. The procedure:</p>
+<ol>
+<li><strong>Pre-filter.</strong> Skip structures whose extras include <code>incorrect_formula</code>. <code>--contains</code> / <code>--skip</code> options apply additional <code>chemical_system</code> filters at the query level.</li>
+<li><strong>Sort key.</strong> Each structure gets a key based on its Hill-compact formula and, by default, its space group number (taken from the <code>cif_spacegroup_number</code> extra or computed with <code>spglib</code> if missing). Structures with different keys can never match.</li>
+<li><strong>Compare within a bucket.</strong> For each bucket of structures sharing a key, run a similarity analysis via <code>pymatgen</code>'s <code>StructureMatcher</code>. Three methods are available:<ul>
+<li><code>first</code> (default): walk the bucket linearly, comparing each structure against the existing representatives; the first matching representative absorbs it.</li>
+<li><code>seb</code>: build a full adjacency matrix and split into connected components.</li>
+<li><code>pymatgen</code>: defer to <code>StructureMatcher.group_structures</code>.</li>
+</ul>
+</li>
+<li><strong>Default matcher settings.</strong> <code>ltol=0.2</code>, <code>stol=0.3</code>, <code>angle_tol=5</code>, <code>primitive_cell=False</code> (structures are already primitivised by the cleaning step), <code>scale=True</code>, <code>attempt_supercell=False</code>. Override with <code>--matcher-settings &lt;yaml&gt;</code>.</li>
+<li><strong>Parallelism and checkpointing.</strong> Buckets are processed in a <code>multiprocessing.Pool</code> of size <code>--parallelize</code> (default 5). If <code>--chunk-size</code> is set, partial results are written to <code>checkpoint.json</code> after each chunk and reloaded on the next run.</li>
+</ol>
+<p>The output is <code>result.json</code>: a list of families, where each family is a list of source strings that ended up matching.</p>
+<h2 id="select">Select</h2>
+<p><code>select</code> turns the unique-families JSON into the final MC3D set. It needs three inputs:</p>
+<ul>
+<li><code>unique_families.json</code> &mdash; output of <code>uniq</code>.</li>
+<li>The previous MC3D data file (<code>mc3d_id_file</code>), mapping MC3D IDs to their golden source and previous duplicate family.</li>
+<li><code>deprecation.json</code> &mdash; output of <code>analyse</code> (see below).</li>
+</ul>
+<p>The logic is:</p>
+<ol>
+<li><strong>Re-use existing MC3D IDs.</strong> For each old MC3D ID, find the new family/families that contain any of its previous family's sources. If exactly one new family lines up, the MC3D ID inherits it. If multiple new families match, families containing an existing "golden" source from any other MC3D entry are dropped from the candidate set, so two old MC3D entries don't end up pointing to the same new family.</li>
+<li><strong>Drop fully deprecated MC3D IDs.</strong> If none of the previous family's sources appear in any new family and every source in the previous family appears in <code>deprecation.json</code>, the MC3D ID is marked deprecated.</li>
+<li><strong>Pick new families.</strong> Families that no MC3D ID has inherited are candidates for new entries. Two filters apply: families with a "golden" source from a previous MC3D entry are skipped (handled by step 1), and families whose sources are <strong>entirely</strong> a subset of the COD-with-hydrogen set (curated COD structures with <code>partial_occupancies=False</code> whose <code>chemical_system</code> contains <code>-H-</code>) are skipped.</li>
+<li><strong>Pick golden sources.</strong> For each new family, pick one source as the golden structure with effective priority <strong>MPDS &gt; ICSD &gt; COD</strong>: the code assigns from each bucket in turn with plain <code>if</code> (not <code>elif</code>), so the last one set wins. (The inline comment in <code>select.py</code> calls this "by permissions"; the rationale is the license / accessibility hierarchy of the underlying databases.) The chosen source's <code>StructureData</code> becomes the golden structure for that family; all other sources are written to its <code>duplicates</code> extra.</li>
+<li><strong>Persist.</strong> The golden structures are collected into a new AiiDA group (default <code>global/uniques/new</code>) and the per-MC3D-ID data is written to <code>new-mc3d-data.json</code>. The output also includes a <code>spglib_space_group</code> field per golden structure, read from the SeeKpath-set <code>spacegroup_number</code> extra on the <code>StructureData</code> (see the <a href="#set-by-aiida-codtools">extras table</a>).</li>
+</ol>
+<h2 id="deprecation">Deprecation</h2>
+<p>"Deprecating" a source or an MC3D ID means flagging it as no longer valid: it must be removed from the MC3D frontend and excluded from future uniqueness analyses.</p>
+<h3 id="source-level-deprecation">Source-level deprecation</h3>
+<p>The <code>analyse</code> subcommands populate a single <code>deprecation.json</code>, keyed by source string, with one of three reasons (defined in <code>mc3d_source.contants.SourceDeprecation</code>):</p>
+<ul>
+<li><code>id_removed</code> &mdash; flagged by <code>analyse id-removed</code>, which takes an <strong>old</strong> and a <strong>new raw <code>CifData</code> group</strong> and writes the source strings whose IDs are present in the old group but not the new one. The stored source string is the old one (the one being removed).</li>
+<li><code>structure_updated</code> &mdash; flagged by <code>analyse structure-updated</code>, which takes an <strong>old curated structure group</strong> and a <strong>new "final" structure group</strong> and writes the source strings whose ID is present in both but whose <code>version</code>/structure changed in the new group. The stored source string is the <strong>old</strong> one (the now-superseded version).</li>
+<li><code>incorrect_formula</code> &mdash; flagged by <code>analyse incorrect-formula</code>, which scans <strong>all <code>StructureData</code> in the AiiDA database</strong> (no group filter) for the <code>incorrect_formula</code> extra set by <code>curate</code>. The stored source string is the affected structure's source.</li>
+</ul>
+<p>Each subcommand merges its findings into the existing <code>deprecation.json</code> (if any), but the overlap policies differ:</p>
+<ul>
+<li><code>id-removed</code>: silently overwrites existing keys with the new value.</li>
+<li><code>structure-updated</code>: aborts (prints <code>Critical</code> and returns) if any keys overlap.</li>
+<li><code>incorrect-formula</code>: prompts via <code>typer.confirm</code>; on confirm, silently overwrites.</li>
+</ul>
+<p>The asymmetry is incidental and probably worth aligning.</p>
+<h3 id="mc3d-id-level-deprecation">MC3D-ID-level deprecation</h3>
+<p>An MC3D ID is deprecated when <strong>all</strong> sources in its previous duplicate family are deprecated (see step 2 of <a href="#select">Select</a>). If only some sources are deprecated &mdash; including the "golden" one &mdash; the MC3D ID is kept and a warning is surfaced on the frontend instead, so the entry remains findable.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

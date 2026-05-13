@@ -1,0 +1,777 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../topics/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Developer Guide - mc3d-source</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#developer-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="mc3d-source" class="md-header__button md-logo" aria-label="mc3d-source" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            mc3d-source
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Developer Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="mc3d-source" class="md-nav__button md-logo" aria-label="mc3d-source" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    mc3d-source
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-commit-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-commit rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commit-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commit messages
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-commit-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-commit rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commit-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commit messages
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="developer-guide">Developer Guide</h1>
+<h2 id="quick-start">Quick start</h2>
+<p>Thanks for contributing! 🙏
+Below you can find an overview of the commands to get you up and running quickly.</p>
+<p>First clone the repository from GitHub</p>
+<pre><code>git clone &lt;GITHUB-REPO&gt;
+</code></pre>
+<p>and install the package locally in <strong>editable</strong> mode (<code>-e</code>):</p>
+<pre><code>cd mc3d-source
+pip install -e .
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We support various tools for developers.
+Select your preferred one from the tabs below.
+If you don't know <code>uv</code> or Hatch, stick with the default for now.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Default</label><label for="__tabbed_1_2">uv</label><label for="__tabbed_1_3">Hatch</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>The "default" approach to developing is to install the development extras in your current environment:</p>
+<pre><code>pip install -e .[pre-commit,tests,docs]
+</code></pre>
+<p>🔧 <strong>Pre-commit</strong></p>
+<p>To make sure your changes adhere to our formatting/linting preferences and commit-message convention, install the pre-commit hooks:</p>
+<pre><code>pre-commit install
+</code></pre>
+<p>They will then run on every <code>git commit</code>.
+You can also run them on e.g. all files using:</p>
+<pre><code>pre-commit run -a
+</code></pre>
+<p>Drop the <code>-a</code> option in case you only want to run on staged files.</p>
+<p>🧪 <strong>Tests</strong></p>
+<p>You can run all tests in the <code>tests</code> directory with <code>pytest</code>:</p>
+<pre><code>pytest
+</code></pre>
+<p>Or select the test module:</p>
+<pre><code>pytest tests/parsers/test_pw.py
+</code></pre>
+<p>See the <a href="https://docs.pytest.org/en/stable/how-to/usage.html#specifying-which-tests-to-run"><code>pytest</code> documentation</a> for more information.</p>
+<p>📚 <strong>Documentation</strong></p>
+<p>We use <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> as our documentation framework.
+Start the documentation server with:</p>
+<pre><code>mkdocs serve
+</code></pre>
+<p>and open the documentation in your browser via the link shown.
+Every time you save a file, the corresponding documentation page is updated automatically!</p>
+<p>A GitHub action is set up to automatically deploy the documentation to GitHub Pages.
+See <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-from-a-branch">the corresponding GitHub Pages documentation</a> for the steps required.</p>
+</div>
+<div class="tabbed-block">
+<p><code>uv</code> is a Python package and project manager.
+See <a href="https://docs.astral.sh/uv/getting-started/installation/">the documentation</a> on how to install <code>uv</code>.</p>
+<p>🔧 <strong>Pre-commit</strong></p>
+<p>To make sure your changes adhere to our formatting/linting preferences and commit-message convention, install the pre-commit hooks:</p>
+<pre><code>uvx pre-commit install
+</code></pre>
+<p>They will then run on every <code>git commit</code>.
+You can also run them on e.g. all files using:</p>
+<pre><code>uvx pre-commit run -a
+</code></pre>
+<p>Drop the <code>-a</code> option in case you only want to run on staged files.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here we use the <a href="https://docs.astral.sh/uv/guides/tools/#running-tools"><code>uvx</code> command</a> to run the <code>pre-commit</code> tool without installing it.
+Alternatively you can also install <a href="https://docs.astral.sh/uv/guides/tools/#installing-tools"><code>pre-commit</code> as a tool</a> and omit <code>uvx</code>.</p>
+</div>
+<p>🧪 <strong>Tests</strong></p>
+<p>You can run all tests in the <code>tests</code> directory with <code>pytest</code>:</p>
+<pre><code>uv run pytest
+</code></pre>
+<p>Or select the test module:</p>
+<pre><code>uv run pytest tests/parsers/test_pw.py
+</code></pre>
+<p>See the <a href="https://docs.pytest.org/en/stable/how-to/usage.html#specifying-which-tests-to-run"><code>pytest</code> documentation</a> for more information.</p>
+<p>📚 <strong>Documentation</strong></p>
+<p>We use <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> as our documentation framework.
+Start the documentation server with:</p>
+<pre><code>mkdocs serve
+</code></pre>
+<p>and open the documentation in your browser via the link shown.
+Every time you save a file, the corresponding documentation page is updated automatically!</p>
+<p>A GitHub action is set up to automatically deploy the documentation to GitHub Pages.
+See <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-from-a-branch">the corresponding GitHub Pages documentation</a> for the steps required.</p>
+</div>
+<div class="tabbed-block">
+<p>You can use <a href="https://hatch.pypa.io/1.9/install/">Hatch</a> to run development tools in isolated environments.
+To see a table of the available environments and their scripts, run:</p>
+<pre><code>hatch env show
+</code></pre>
+<p>🔧 <strong>Pre-commit</strong></p>
+<p>To make sure your changes adhere to our formatting/linting preferences and commit-message convention, install the pre-commit hooks:</p>
+<pre><code>hatch run pre-commit:install
+</code></pre>
+<p>They will then run on every <code>git commit</code>.
+You can also run them on e.g. all files using:</p>
+<pre><code>hatch run pre-commit:run -a
+</code></pre>
+<p>Drop the <code>-a</code> option in case you only want to run on staged files.</p>
+<p>🧪 <strong>Tests</strong></p>
+<p>You can run all tests in the <code>tests</code> directory using:</p>
+<pre><code>hatch test
+</code></pre>
+<p>Or select the test module:</p>
+<pre><code>hatch test tests/parsers/test_pw.py
+</code></pre>
+<p>You can also run the tests for a specific Python version with the <code>-py</code> option:</p>
+<pre><code>hatch test -py 3.11
+</code></pre>
+<p>Or all supported Python <code>versions</code> with <code>--all</code>:</p>
+<pre><code>hatch test --all
+</code></pre>
+<p>See the <a href="https://hatch.pypa.io/1.12/tutorials/testing/overview/">Hatch documentation</a> for more information.</p>
+<p>📚 <strong>Documentation</strong></p>
+<p>We use <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> as our documentation framework.
+Start the documentation server with:</p>
+<pre><code>hatch run docs:serve
+</code></pre>
+<p>and open the documentation in your browser via the link shown.
+Every time you save a file, the corresponding documentation page is updated automatically!</p>
+<p>A GitHub action is set up to automatically deploy the documentation to GitHub Pages.
+See <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-from-a-branch">the corresponding GitHub Pages documentation</a> for the steps required.</p>
+</div>
+</div>
+</div>
+<h2 id="pre-commit-rules">Pre-commit rules</h2>
+<p>From the extensive <a href="https://docs.astral.sh/ruff/rules/">Ruff ruleset</a>, we ignore the following globally:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Rule</th>
+<th>Rationale / Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TRY003</code></td>
+<td><a href="https://docs.astral.sh/ruff/rules/raise-vanilla-args/">raise-vanilla-args</a></td>
+<td>Formatting warning/exception messages beforehand makes the code less readable, for a minor benefit in readability of the exception.</td>
+</tr>
+<tr>
+<td><code>EM101</code></td>
+<td><a href="https://docs.astral.sh/ruff/rules/raw-string-in-exception/">raw-string-in-exception</a></td>
+<td>Same as <code>TRY003</code></td>
+</tr>
+<tr>
+<td><code>EM102</code></td>
+<td><a href="https://docs.astral.sh/ruff/rules/f-string-in-exception/">f-string-in-exception</a></td>
+<td>Same as <code>TRY003</code></td>
+</tr>
+<tr>
+<td><code>PLR2004</code></td>
+<td><a href="https://docs.astral.sh/ruff/rules/magic-value-comparison/">magic-value-comparison</a></td>
+<td>We have a lot of “magic values” to compare with in scientific code; naming them all would reduce readability for little benefit.</td>
+</tr>
+<tr>
+<td><code>FBT002</code></td>
+<td><a href="https://docs.astral.sh/ruff/rules/boolean-default-value-positional-argument/">boolean-default-value-positional-argument</a></td>
+<td>We understand the concept, but adhering to this rule is not a small change in syntax; disable for now.</td>
+</tr>
+<tr>
+<td><code>TID252</code></td>
+<td><a href="https://docs.astral.sh/ruff/rules/relative-imports/">relative-imports</a></td>
+<td>We don’t mind relative imports; as long as you don’t go up a level, they’re more readable (less verbose).</td>
+</tr>
+</tbody>
+</table>
+<p>And the following rules for the files in the <code>tests</code> directory:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Rule</th>
+<th>Rationale / Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INP001</code></td>
+<td><a href="https://docs.astral.sh/ruff/rules/implicit-namespace-package/">implicit-namespace-package</a></td>
+<td>When tests are not part of the package, there is no need for <code>__init__.py</code> files.</td>
+</tr>
+<tr>
+<td><code>S101</code></td>
+<td><a href="https://docs.astral.sh/ruff/rules/assert/">assert</a></td>
+<td>Asserts should not be used in production environments, but are fine for tests.</td>
+</tr>
+</tbody>
+</table>
+<p>And the following rules for the files in the <code>dev</code> directory:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Rule</th>
+<th>Rationale / Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INP001</code></td>
+<td><a href="https://docs.astral.sh/ruff/rules/implicit-namespace-package/">implicit-namespace-package</a></td>
+<td>Dev scripts are not part of the package, so there is no need for <code>__init__.py</code> files.</td>
+</tr>
+<tr>
+<td><code>T201</code></td>
+<td><a href="https://docs.astral.sh/ruff/rules/print/">print</a></td>
+<td>Dev scripts use <code>print()</code> for user-facing output, which is fine outside of library code.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="release">Release</h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Before the <strong>first</strong> release works, the repository has to be registered as a PyPI <a href="https://docs.pypi.org/trusted-publishers/">Trusted Publisher</a> and a <code>pypi</code> GitHub environment has to exist.
+See the <a href="https://mbercx.github.io/python-copier/publishing/"><code>python-copier</code> first-publication guide</a> for that one-time setup — you only do it once per project.</p>
+</div>
+<p>Releases of <code>mc3d-source</code> are cut by pushing a <code>vX.Y.Z</code> tag to GitHub.
+The <code>cd</code> workflow under <code>.github/workflows/cd.yaml</code> then builds an sdist and wheel with Hatch and publishes them to PyPI.</p>
+<ol>
+<li>
+<p>Bump the version and generate the changelog draft:</p>
+<pre><code>hatch run bump &lt;new-version&gt;
+</code></pre>
+<p>This runs <code>hatch version</code> to update <code>src/mc3d-source/__about__.py</code>, then runs <code>dev/update_changelog.py</code> to prepend a new section to <code>CHANGELOG.md</code> with commits sorted by type.
+Review the generated changelog, make any edits, and commit the bump on <code>main</code> (typically via a PR).</p>
+</li>
+<li>
+<p>Tag the bump commit and push the tag:</p>
+<pre><code>git tag -a v&lt;new-version&gt; -m '🚀 Release v&lt;new-version&gt;'
+git push origin v&lt;new-version&gt;
+</code></pre>
+</li>
+<li>
+<p>The <code>cd.yaml</code> workflow picks up the tag, builds the distributions, and publishes them to PyPI.</p>
+</li>
+</ol>
+<p>The git tag and the version in <code>__about__.py</code> must agree.
+PyPI only sees the version baked into the built distribution, so a mismatch will silently publish under the wrong version (or be rejected as a duplicate of an existing release), and re-tagging after the fact is awkward.</p>
+<h2 id="commit-messages">Commit messages</h2>
+<p>Each commit subject must start with a leading emoji indicating the type of change.
+This is enforced locally by a <code>commit-msg</code> pre-commit hook (<code>dev/check_commit_msg.py</code>) and in CI by a <code>commit-msgs</code> job that checks every commit in a pull request.
+The changelog script (<code>dev/update_changelog.py</code>) uses the same emojis to automatically sort commits into the right sections, so the sorting happens at commit time, when the changes are still fresh in memory.</p>
+<p>For the full specification and emoji table, see the <a href="https://mbercx.github.io/python-copier/dev-standards/#specifying-the-type-of-change">commit message conventions</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
